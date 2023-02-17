@@ -2,7 +2,7 @@ import pandas as pd
 import random
 from termcolor import colored
 
-iteracoes = 750
+iteracoes = 1000
 
 # Lê o arquivo Excel
 df = pd.read_excel('futeletrica.xlsx',engine='openpyxl',index_col="Numero")
@@ -74,6 +74,7 @@ def random_time( iteracoes, df , dff_final):
 dff, discrep = random_time( iteracoes, df, dff_final)
 dff = dff.iloc[:, 0:4]
 # Imprimindo os times e o score
+print("Iterações = ", iteracoes)
 print('==============================================')
 print (colored("TIME AMARELO","yellow"))
 print ('SCORE DO TIME = ',round(dff[dff["Time"] == 1]["Score"].sum(),2)," - SCORE MÉDIO = ", round(dff[dff["Time"] == 1]["Score"].sum()/5,2))
