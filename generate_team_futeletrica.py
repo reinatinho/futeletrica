@@ -2,7 +2,7 @@ import pandas as pd
 import random
 from termcolor import colored
 
-iteracoes = 1000
+iteracoes = 2000
 
 # Lê o arquivo Excel
 df = pd.read_excel('futeletrica.xlsx',engine='openpyxl',index_col="Numero")
@@ -16,6 +16,7 @@ def random_time( iteracoes, df , dff_final):
     # Agrupa os jogadores por posição
     ata = df[df['Posição'] == 'ATA']['Nome'].tolist()
     mei = df[df['Posição'] == 'MEI']['Nome'].tolist()
+    vol = df[df['Posição'] == 'VOL']['Nome'].tolist()
     zag = df[df['Posição'] == 'ZAG']['Nome'].tolist()
 
     for it in range(iteracoes):
@@ -23,7 +24,7 @@ def random_time( iteracoes, df , dff_final):
         # Embalhar de forma aleatória as listas das posições
         random.shuffle(ata)
         random.shuffle(mei)
-        
+        random.shuffle(vol)        
         random.shuffle(zag)
 
         # Criar dataframe com nome, posição e time)
@@ -31,9 +32,15 @@ def random_time( iteracoes, df , dff_final):
 
         # Inserir dados no df
         time = 1
-        for i in ata:
-            df_ata = pd.DataFrame( [{'Nome': i, 'Posição': 'ATA', 'Time': time, 'Score': float(df[df['Nome'] == i]['SR'])}])
-            dff = pd.concat([dff,df_ata])
+        for i in zag:
+            df_zag = pd.DataFrame( [{'Nome': i, 'Posição': 'ZAG', 'Time': time, 'Score': float(df[df['Nome'] == i]['SR'])}])
+            dff = pd.concat([dff,df_zag])
+            time = time + 1
+            if time == 4:
+                time = 1 
+        for i in vol:
+            df_vol = pd.DataFrame( [{'Nome': i, 'Posição': 'VOL', 'Time': time, 'Score': float(df[df['Nome'] == i]['SR'])}])
+            dff = pd.concat([dff,df_vol])
             time = time + 1
             if time == 4:
                 time = 1
@@ -43,9 +50,9 @@ def random_time( iteracoes, df , dff_final):
             time = time + 1
             if time == 4:
                 time = 1      
-        for i in zag:
-            df_zag = pd.DataFrame( [{'Nome': i, 'Posição': 'ZAG', 'Time': time, 'Score': float(df[df['Nome'] == i]['SR'])}])
-            dff = pd.concat([dff,df_zag])
+        for i in ata:
+            df_ata = pd.DataFrame( [{'Nome': i, 'Posição': 'ATA', 'Time': time, 'Score': float(df[df['Nome'] == i]['SR'])}])
+            dff = pd.concat([dff,df_ata])
             time = time + 1
             if time == 4:
                 time = 1
