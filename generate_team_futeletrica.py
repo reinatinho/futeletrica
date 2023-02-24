@@ -2,7 +2,7 @@ import pandas as pd
 import random
 from termcolor import colored
 
-iteracoes = 2000
+iteracoes = 10000
 
 # Lê o arquivo Excel
 df = pd.read_excel('futeletrica.xlsx',engine='openpyxl',index_col="Numero")
